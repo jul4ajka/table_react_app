@@ -1,7 +1,6 @@
 import {
   BrowserRouter as Router,
-  Route,
-  ConnectedRouter,
+  Route
 } from 'react-router-dom'
 import { AuthProvider } from './config/AuthProvider'
 import PrivateRoute from './config/PrivateRoute'
@@ -14,9 +13,9 @@ function App() {
     basename: process.env.PUBLIC_URL,
   })
   return (
-    <ConnectedRouter history={history}>
+     >
       <AuthProvider>
-        <Router>
+        <Router history={history}>
           <div>
             <PrivateRoute exact path='/' component={Table} />
             <Route path='/login' component={Login} />
@@ -24,7 +23,6 @@ function App() {
           </div>
         </Router>
       </AuthProvider>
-    </ConnectedRouter>
   )
 }
 
