@@ -32,13 +32,13 @@ const SignUp = ({ history }) => {
         <Inputs />
         <div className='Error'>{error}</div>
         <div className='SignUp_buttons'>
+          <Button variant='contained' color='secondary' type='submit'>
+            Sign up
+          </Button>
           <Button variant='contained' color='primary'>
             <Link to='/login' className='SignUp_link'>
               Login
             </Link>
-          </Button>
-          <Button variant='contained' color='secondary' type='submit'>
-            Sign up
           </Button>
         </div>
       </form>
