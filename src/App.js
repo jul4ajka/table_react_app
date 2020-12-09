@@ -11,8 +11,8 @@ function App() {
       <Router>
         <div>
           <PrivateRoute exact path='/' component={Table} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/sign-up' component={SignUp} />
+          <Route path='/login' component={Login} />
+          <Route path='/sign-up' component={SignUp} />
         </div>
       </Router>
     </AuthProvider>
