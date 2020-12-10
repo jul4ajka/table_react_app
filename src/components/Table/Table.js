@@ -14,6 +14,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 
+// import { useDispatch, useSelector } from 'react-redux'
+
 const columns = [
   { id: 'view', label: '', minWidth: 120 },
   { id: 'edit', label: '', minWidth: 150 },
@@ -140,9 +142,13 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    maxHeight: 500,
   },
 })
+
+// const tableDetails = useSelector(state => state.tableDetails)
+// const dispatch = useDispatch()
+
 const TableWrapper = ({ history }) => {
   const handleSignOut = useCallback(
     async event => {
@@ -268,7 +274,7 @@ const TableWrapper = ({ history }) => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
-          component='div'
+          component={TableContainer}
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
