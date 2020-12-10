@@ -1,0 +1,11 @@
+.Button_container {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.Button_container > .MuiButton-containedPrimary {
+  margin-right: 100px;
+}
