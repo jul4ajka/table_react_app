@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import app from './base.js'
+import sagaApp from './base.js'
+import 'firebase/auth'
 
 export const AuthContext = React.createContext()
 
@@ -8,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [pending, setPending] = useState(true)
 
   useEffect(() => {
-    app.auth().onAuthStateChanged(user => {
+    sagaApp.auth().onAuthStateChanged(user => {
       setCurrentUser(user)
       setPending(false)
     })

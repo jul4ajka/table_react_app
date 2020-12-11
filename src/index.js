@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals'
 
 import configureStore from './store/store'
 import { Provider } from 'react-redux'
+import 'whatwg-fetch'
 
 const store = configureStore()
 

@@ -11,5 +11,7 @@ export default function usersReducer(state = initialState, action) {
         ...state,
         users: action.payload,
       }
+    default:
+      return state
   }
 }

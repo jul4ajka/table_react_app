@@ -59,92 +59,92 @@ const columns = [
   { id: 'delete', label: '', minWidth: 100 },
 ]
 
-// const rows = [
-//   {
-//     empID: 1,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 2,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 3,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 4,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 5,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 6,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 7,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 8,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 1,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 1,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 1,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 1,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 1,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-//   {
-//     empID: 1,
-//     empName: 'Julia',
-//     empActive: 'Yes',
-//     empDepartment: 'Development',
-//   },
-// ]
+const rows = [
+  {
+    empID: 1,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 2,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 3,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 4,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 5,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 6,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 7,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 8,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 1,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 1,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 1,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 1,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 1,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+  {
+    empID: 1,
+    empName: 'Julia',
+    empActive: 'Yes',
+    empDepartment: 'Development',
+  },
+]
 
 const useStyles = makeStyles({
   root: {
@@ -154,14 +154,6 @@ const useStyles = makeStyles({
     maxHeight: 500,
   },
 })
-
-// const tableDetails = useSelector(state => state.tableDetails)
-// const dispatch = useDispatch()
-
-const getUsers = () => {
-  const users = app.database.read()
-  console.log(users)
-}
 
 const styles = theme => ({
   root: {
@@ -222,6 +214,16 @@ const TableWrapper = ({ history }) => {
     [history]
   )
 
+  const [user, setUser] = useState(null)
+
+  // Redux
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllUsers())
+  }, [])
+  const rows = useSelector(state => state.value)
+
+  // Table rows
   const classes = useStyles()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -234,10 +236,10 @@ const TableWrapper = ({ history }) => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
+  // Modal window
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
@@ -247,19 +249,10 @@ const TableWrapper = ({ history }) => {
     setOpen(false)
   }
 
-  const [user, setUser] = useState(null)
-
-  // Redux
-  const rows = useSelector(state => [...state])
-  const dispatch = useDispatch()
-  const handler = useCallback(() => {
-    dispatch(getAllUsers())
-  }, [])
-
   return (
     <div>
       <div className='Button_container'>
-        <Button variant='contained' color='primary' onClick={handler}>
+        <Button variant='contained' color='primary'>
           Get Users
         </Button>
         <Button variant='contained' color='primary' onClick={handleSignOut}>
