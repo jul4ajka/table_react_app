@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import ReduxSagaFirebase from 'redux-saga-firebase'
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -10,4 +11,6 @@ const app = firebase.initializeApp({
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
 })
 
-export default app
+const sagaApp = new ReduxSagaFirebase(app)
+
+export default sagaApp

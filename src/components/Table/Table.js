@@ -1,7 +1,6 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import './Table.css'
-import Button from '@material-ui/core/Button'
 import app from '../../config/base'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -13,8 +12,18 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
+import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import MuiDialogTitle from '@material-ui/core/DialogTitle'
+import MuiDialogContent from '@material-ui/core/DialogContent'
+import MuiDialogActions from '@material-ui/core/DialogActions'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import Typography from '@material-ui/core/Typography'
 
-// import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import getAllUsers from '../../store/actions/users'
 
 const columns = [
   { id: 'view', label: '', minWidth: 120 },
@@ -50,92 +59,92 @@ const columns = [
   { id: 'delete', label: '', minWidth: 100 },
 ]
 
-const rows = [
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-  {
-    empID: 1,
-    empName: 'Julia',
-    empActive: 'Yes',
-    empDepartment: 'Development',
-  },
-]
+// const rows = [
+//   {
+//     empID: 1,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 2,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 3,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 4,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 5,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 6,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 7,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 8,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 1,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 1,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 1,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 1,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 1,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+//   {
+//     empID: 1,
+//     empName: 'Julia',
+//     empActive: 'Yes',
+//     empDepartment: 'Development',
+//   },
+// ]
 
 const useStyles = makeStyles({
   root: {
@@ -148,6 +157,55 @@ const useStyles = makeStyles({
 
 // const tableDetails = useSelector(state => state.tableDetails)
 // const dispatch = useDispatch()
+
+const getUsers = () => {
+  const users = app.database.read()
+  console.log(users)
+}
+
+const styles = theme => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+})
+
+const DialogTitle = withStyles(styles)(props => {
+  const { children, classes, onClose, ...other } = props
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant='h6'>{children}</Typography>
+      {onClose ? (
+        <IconButton
+          aria-label='close'
+          className={classes.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  )
+})
+
+const DialogContent = withStyles(theme => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiDialogContent)
+
+const DialogActions = withStyles(theme => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1),
+  },
+}))(MuiDialogActions)
 
 const TableWrapper = ({ history }) => {
   const handleSignOut = useCallback(
@@ -163,12 +221,6 @@ const TableWrapper = ({ history }) => {
     },
     [history]
   )
-
-  const handleView = () => {}
-
-  const handleEdit = () => {}
-
-  const handleDelete = () => {}
 
   const classes = useStyles()
   const [page, setPage] = useState(0)
@@ -186,13 +238,35 @@ const TableWrapper = ({ history }) => {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
 
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const [user, setUser] = useState(null)
+
+  // Redux
+  const rows = useSelector(state => [...state])
+  const dispatch = useDispatch()
+  const handler = useCallback(() => {
+    dispatch(getAllUsers())
+  }, [])
+
   return (
     <div>
       <div className='Button_container'>
+        <Button variant='contained' color='primary' onClick={handler}>
+          Get Users
+        </Button>
         <Button variant='contained' color='primary' onClick={handleSignOut}>
           Logout
         </Button>
       </div>
+
       <Paper className={classes.root}>
         <TableContainer className={classes.container}>
           <Table stickyHeader aria-label='sticky table'>
@@ -212,39 +286,26 @@ const TableWrapper = ({ history }) => {
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(row => {
+                .map((row, index) => {
                   return (
                     <TableRow
                       hover
                       role='checkbox'
                       tabIndex={-1}
-                      key={row.code}
+                      key={index}
+                      onClick={() => setUser(row)}
                     >
-                      {/* {columns.map(column => {
-                        const value = row[column.id]
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === 'number'
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        )
-                      })} */}
                       <TableCell>
                         <Button
                           variant='contained'
                           color='primary'
-                          onclick={handleView}
+                          onClick={handleClickOpen}
                         >
                           View
                         </Button>
                       </TableCell>
                       <TableCell>
-                        <Button
-                          variant='contained'
-                          color='secondary'
-                          onClick={handleEdit}
-                        >
+                        <Button variant='contained' color='secondary'>
                           Edit
                         </Button>
                       </TableCell>
@@ -253,13 +314,7 @@ const TableWrapper = ({ history }) => {
                       <TableCell>{row.empActive}</TableCell>
                       <TableCell>{row.empDepartment}</TableCell>
                       <TableCell>
-                        <Button
-                          variant='contained'
-                          color='default'
-                          onClick={handleDelete}
-                        >
-                          Delete
-                        </Button>
+                        <Button variant='contained'>Delete</Button>
                       </TableCell>
                     </TableRow>
                   )
@@ -278,10 +333,42 @@ const TableWrapper = ({ history }) => {
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby='customized-dialog-title'
+        open={open}
+      >
+        <DialogTitle id='customized-dialog-title' onClose={handleClose}>
+          <strong>Employee</strong>
+        </DialogTitle>
+        <DialogContent>
+          {user ? (
+            <div>
+              <p>
+                <strong>Employee ID:</strong> {user.empID}
+              </p>
+              <p>
+                <strong>Name:</strong> {user.empName}
+              </p>
+              <p>
+                <strong>Active:</strong> {user.empActive}
+              </p>
+              <p>
+                <strong> Department:</strong> {user.empDepartment}
+              </p>
+            </div>
+          ) : null}
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose} color='primary'>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }
